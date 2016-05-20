@@ -1,5 +1,5 @@
 {
-  "name": "DeRain/Primodialer-API-client",
+  "name": "DeRain/primodialer-api-client",
   "description": "This is a library for working with api of Primo Dialer VoIP service.",
   "minimum-stability": "stable",
   "license": "MIT",
