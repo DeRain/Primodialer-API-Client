@@ -1,0 +1,24 @@
+{
+  "name": "DeRain/Primodialer-API-client",
+  "description": "This is a library for working with api of Primo Dialer VoIP service.",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Kirill Beresnev",
+      "email": "derainberk@gmail.com"
+    }
+  ],
+  "require": {
+    "guzzlehttp/guzzle": "^6.2",
+    "Respect/Validation": "^1.1"
+  },
+  "require-dev" : {
+    "codeception/codeception": "^2.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "DeRain\\Primodialer\\Api\\": "src/"
+    }
+  }
+}
