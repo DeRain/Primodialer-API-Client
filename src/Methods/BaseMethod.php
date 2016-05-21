@@ -29,7 +29,7 @@ abstract class BaseMethod
     public function __invoke(Request $request, callable $next = null)
     {
         if (!$this->checkModel($next)) {
-            throw new InvalidArgumentException('Model is not prop for this method');
+            throw new InvalidArgumentException('Model ' . get_class($next) .' is not right for this method');
         }
         $uri = new Uri($request->getUri());
         $uri = Uri::withQueryValue($uri, 'function', $this->getUriFunction());

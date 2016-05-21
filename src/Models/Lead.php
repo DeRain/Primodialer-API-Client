@@ -10,39 +10,39 @@ class Lead extends BaseModel
 {
     const DEFAULT_PHONE_CODE = 1;
     const DEFAULT_LIST_ID = 999;
-
+    
     /**
-     * @param string $number
+     * @param string $value
      */
-    public function setPhoneNumber($number)
+    public function setPhoneNumber($value)
     {
         $validator = Validator::numeric()->length(6, 16);
-        if ($validator->validate($number)) {
-            $this->setProperty('phone_number', $number);
+        if ($validator->validate($value)) {
+            $this->setProperty('phone_number', $value);
         }
     }
 
     /**
-     * @param string $code
+     * @param string $value
      */
-    public function setPhoneCode($code)
+    public function setPhoneCode($value)
     {
         $validator = Validator::numeric()->length(1, 4);
-        if ($validator->validate($code)) {
-            $this->setProperty('phone_code', $code);
+        if ($validator->validate($value)) {
+            $this->setProperty('phone_code', $value);
         } else {
             $this->setProperty('phone_code', self::DEFAULT_PHONE_CODE);
         }
     }
 
     /**
-     * @param string $listId
+     * @param string $value
      */
-    public function setListId($listId)
+    public function setListId($value)
     {
         $validator = Validator::numeric()->length(3, 12);
-        if ($validator->validate($listId)) {
-            $this->setProperty('list_id', $listId);
+        if ($validator->validate($value)) {
+            $this->setProperty('list_id', $value);
         } else {
             $this->setProperty('list_id', self::DEFAULT_LIST_ID);
         }
@@ -51,13 +51,100 @@ class Lead extends BaseModel
     /**
      * @param string $value
      */
-    public function setDncCheck($value)
+    public function setFirstName($value)
     {
-        $validator = Validator::in(['AREACODE', 'Y', 'N']);
-        if ($validator->validate($value)) {
-            $this->setProperty('dnc_check', $value);
-        } else {   
-            $this->setProperty('dnc_check', 'N');
+        if (Validator::length(1, 30)->validate($value)) {
+            $this->setProperty('first_name', $value);
+        }
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setLastName($value)
+    {
+        if (Validator::length(1, 30)->validate($value)) {
+            $this->setProperty('last_name', $value);
+        }
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setAddress1($value)
+    {
+        if (Validator::length(1, 100)->validate($value)) {
+            $this->setProperty('address1', $value);
+        }
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setAddress2($value)
+    {
+        if (Validator::length(1, 100)->validate($value)) {
+            $this->setProperty('address2', $value);
+        }
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setAddress3($value)
+    {
+        if (Validator::length(1, 100)->validate($value)) {
+            $this->setProperty('address3', $value);
+        }
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setCity($value)
+    {
+        if (Validator::length(1, 50)->validate($value)) {
+            $this->setProperty('city', $value);
+        }
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setState($value)
+    {
+        if (Validator::length(1, 2)->validate($value)) {
+            $this->setProperty('state', $value);
+        }
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setPostalCode($value)
+    {
+        if (Validator::length(1, 10)->validate($value)) {
+            $this->setProperty('postal_code', $value);
+        }
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setCountryCode($value)
+    {
+        if (Validator::length(1, 3)->validate($value)) {
+            $this->setProperty('country_code', $value);
+        }
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setEmail($value)
+    {
+        if (Validator::email()->validate($value)) {
+            $this->setProperty('email', $value);
         }
     }
 
@@ -75,11 +162,45 @@ class Lead extends BaseModel
     /**
      * @param string $value
      */
+    public function setDncCheck($value)
+    {
+        $validator = Validator::in(['AREACODE', 'Y', 'N']);
+        if ($validator->validate($value)) {
+            $this->setProperty('dnc_check', $value);
+        } else {
+            $this->setProperty('dnc_check', 'N');
+        }
+    }
+
+    /**
+     * @param string $value
+     */
     public function setAddToHopper($value)
     {
         $validator = Validator::in(['N', 'Y']);
         if ($validator->validate($value)) {
             $this->setProperty('add_to_hopper', $value);
+        }
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setDuplicateCheck($value)
+    {
+        $validator = Validator::in([
+            'DUPLIST',
+            'DUPCAMP',
+            'DUPSYS',
+            'DUPTITLEALTPHONELIST',
+            'DUPTITLEALTPHONECAMP',
+            'DUPTITLEALTPHONESYS',
+            'DUPNAMEPHONELIST',
+            'DUPNAMEPHONECAMP',
+            'DUPNAMEPHONESYS'
+        ]);
+        if ($validator->validate($value)) {
+            $this->setProperty('duplicate_check', $value);
         }
     }
 

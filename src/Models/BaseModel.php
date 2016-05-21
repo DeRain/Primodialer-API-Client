@@ -2,6 +2,7 @@
 
 namespace DeRain\Primodialer\Api\Models;
 
+use DeRain\Primodialer\Api\Exceptions\RemoteCallException;
 use DeRain\Primodialer\Api\Responses\BaseResponse;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
@@ -24,14 +25,20 @@ abstract class BaseModel
     /**
      * @param Request $request
      * @return BaseResponse
+     *
+     * @throws RemoteCallException
      */
     public function __invoke(Request $request)
     {
-        $uri = new Uri($request->getUri());
-        $uri = $this->addParamsToUri($uri);
-        $request = $request->withUri($uri);
-        $client = new Client();
-        return $this->getApiResponse($client->send($request));
+        try {
+            $uri = new Uri($request->getUri());
+            $uri = $this->addParamsToUri($uri);
+            $request = $request->withUri($uri);
+            $client = new Client();
+            return $this->getApiResponse($client->send($request));
+        } catch (\Exception $e) {
+            throw new RemoteCallException($e->getMessage());
+        }
     }
 
     /**
