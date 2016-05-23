@@ -2,7 +2,7 @@
 
 namespace DeRain\Primodialer\Api\Responses;
 
-use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Message\Response;
 
 abstract class BaseResponse
 {

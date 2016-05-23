@@ -5,9 +5,9 @@ namespace DeRain\Primodialer\Api\Models;
 use DeRain\Primodialer\Api\Exceptions\RemoteCallException;
 use DeRain\Primodialer\Api\Responses\BaseResponse;
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\Uri;
+use GuzzleHttp\Message\Response;
+use GuzzleHttp\Message\Request;
+use GuzzleHttp\Query;
 
 abstract class BaseModel
 {
@@ -31,9 +31,8 @@ abstract class BaseModel
     public function __invoke(Request $request)
     {
         try {
-            $uri = new Uri($request->getUri());
-            $uri = $this->addParamsToUri($uri);
-            $request = $request->withUri($uri);
+            $query = $request->getQuery();
+            $this->addParamsToUri($query);
             $client = new Client();
             return $this->getApiResponse($client->send($request));
         } catch (\Exception $e) {
@@ -60,16 +59,13 @@ abstract class BaseModel
     }
 
     /**
-     * @param Uri|\Psr\Http\Message\UriInterface $uri
-     * @return Uri|\Psr\Http\Message\UriInterface
+     * @param Query $query
      */
-    private function addParamsToUri(Uri $uri)
+    private function addParamsToUri(Query $query)
     {
         foreach ($this->_properties as $key => $value)
         {
-            $uri = Uri::withQueryValue($uri, $key, $value);
+            $query->set($key, $value);
         }
-
-        return $uri;
     }
 }

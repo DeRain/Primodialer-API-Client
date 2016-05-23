@@ -3,7 +3,7 @@
 namespace DeRain\Primodialer\Api\Models;
 
 use DeRain\Primodialer\Api\Responses\LeadResponse;
-use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Message\Response;
 use Respect\Validation\Validator;
 
 class Lead extends BaseModel

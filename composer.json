@@ -10,7 +10,7 @@
     }
   ],
   "require": {
-    "guzzlehttp/guzzle": "^6.2",
+    "guzzlehttp/guzzle": "^5.0",
     "Respect/Validation": "^1.1"
   },
   "require-dev" : {

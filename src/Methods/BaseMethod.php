@@ -3,8 +3,7 @@
 namespace DeRain\Primodialer\Api\Methods;
 
 use DeRain\Primodialer\Api\Exceptions\InvalidArgumentException;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Uri;
+use GuzzleHttp\Message\Request;
 
 abstract class BaseMethod
 {
@@ -31,9 +30,8 @@ abstract class BaseMethod
         if (!$this->checkModel($next)) {
             throw new InvalidArgumentException('Model ' . get_class($next) .' is not right for this method');
         }
-        $uri = new Uri($request->getUri());
-        $uri = Uri::withQueryValue($uri, 'function', $this->getUriFunction());
-        $request = $request->withUri($uri);
+        $query = $request->getQuery();
+        $query->add('function', $this->getUriFunction());
         return $next($request);
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
 namespace DeRain\Primodialer\Api;
+
 use DeRain\Primodialer\Api\Exceptions\InvalidArgumentException;
 use DeRain\Primodialer\Api\Methods\BaseMethod;
 use DeRain\Primodialer\Api\Models\BaseModel;
 use DeRain\Primodialer\Api\Responses\BaseResponse;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Uri;
+use GuzzleHttp\Message\Request;
 use Respect\Validation\Validator;
 
 class Main
@@ -36,15 +36,17 @@ class Main
     }
 
     /**
-     * @param $apiUrl
+     * @param string $apiUrl
      */
     public function setApiUrl($apiUrl)
     {
-        $this->_apiUrl = $apiUrl;
+        if (Validator::url()->validate($apiUrl)) {
+            $this->_apiUrl = $apiUrl;
+        }
     }
 
     /**
-     * @param $username
+     * @param string $username
      */
     public function setUsername($username)
     {
@@ -52,7 +54,7 @@ class Main
     }
 
     /**
-     * @param $password
+     * @param string $password
      */
     public function setPassword($password)
     {
@@ -60,7 +62,7 @@ class Main
     }
 
     /**
-     * @param $source
+     * @param string $source
      */
     public function setSource($source)
     {
@@ -78,11 +80,11 @@ class Main
     public function makeRequest(BaseMethod $method, BaseModel $model)
     {
         try {
-            $uri = new Uri($this->_apiUrl);
-            $uri = Uri::withQueryValue($uri, 'user', $this->_username);
-            $uri = Uri::withQueryValue($uri, 'pass', $this->_password);
-            $uri = Uri::withQueryValue($uri, 'source', $this->_source);
-            $request = new Request('GET', $uri);
+            $request = new Request('GET', $this->_apiUrl);
+            $query = $request->getQuery();
+            $query->set('user', $this->_username);
+            $query->set('pass', $this->_password);
+            $query->set('source', $this->_source);
             return $method($request, $model);
         } catch (\InvalidArgumentException $e) {
             throw new InvalidArgumentException($e->getMessage());
