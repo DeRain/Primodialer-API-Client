@@ -149,13 +149,23 @@ class Lead extends BaseModel
     }
 
     /**
-     * @param string $id
+     * @param string $value
      */
-    public function setCampaignId($id)
+    public function setCampaignId($value)
     {
         $validator = Validator::numeric()->length(2, 8);
-        if ($validator->validate($id)) {
-            $this->setProperty('campaign_id', $id);
+        if ($validator->validate($value)) {
+            $this->setProperty('campaign_id', $value);
+        }
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setSourceId($value)
+    {
+        if (Validator::length(1, 50)->validate($value)) {
+            $this->setProperty('source_id', $value);
         }
     }
 
