@@ -32,6 +32,7 @@ abstract class BaseResponse
 
     /**
      * BaseResponse constructor.
+     *
      * @param Response $response
      */
     public function __construct(Response $response)
@@ -77,14 +78,28 @@ abstract class BaseResponse
     }
 
     /**
+     * Get status code
+     *
+     * @return int|string
+     */
+    protected function getStatusCode()
+    {
+        return $this->_httpResponse->getStatusCode();
+    }
+
+    /**
      *
      */
     protected function parseError()
     {
         $response = $this->getHttpResponse();
+        $statusCode = $this->getStatusCode();
         if (mb_strpos($response, self::ERROR_DELIMITER) !== false) {
             $error = explode(self::ERROR_DELIMITER, $response);
             $this->_message = trim($error[1]);
+            $this->_hasError = true;
+        } elseif ($statusCode != 200) {
+            $this->_message = 'Server response with '.$statusCode.' status code.'.PHP_EOL;
             $this->_hasError = true;
         }
     }
@@ -104,7 +119,7 @@ abstract class BaseResponse
     }
 
     /**
-     * 
+     *
      */
     protected function parseNotice()
     {
