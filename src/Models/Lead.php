@@ -172,6 +172,15 @@ class Lead extends BaseModel
     /**
      * @param string $value
      */
+    public function setVendorLeadCode($value){
+        if (Validator::length(1, 20)->validate($value)) {
+            $this->setProperty('vendor_lead_code', $value);
+        }
+    }
+
+    /**
+     * @param string $value
+     */
     public function setDncCheck($value)
     {
         $validator = Validator::in(['AREACODE', 'Y', 'N']);
