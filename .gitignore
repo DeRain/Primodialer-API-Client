@@ -1,4 +1,5 @@
 index.php
 composer.phar
 .idea
+composer.lock
 /vendor
